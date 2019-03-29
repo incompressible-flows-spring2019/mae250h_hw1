@@ -59,6 +59,26 @@ fcn(x) = sin(x)
 
   @test x ≈ x2
 
+  #=
+  Now a test of a regular matrix with non-trivial result. We will test a
+  4x4 system with random choices for coefficients and right-hand side vector
+  and compare our answer with A\rhs
+  =#
+  a = rand(); b = rand(); c = rand()
+
+  A = [b c 0 0; a b c 0; 0 a b c; 0 0 a b]
+  rhs = rand(4)
+
+  x = HW1.trisolve(a,b,c,rhs,"regular") # our solution
+  x2 = A\rhs
+
+  @test x ≈ x2
+
+  # Check that it works for a one-dimensional problem
+  rhs = rand(1)
+  x = HW1.trisolve(0,2,0,rhs,"regular")
+  @test x == rhs/2
+
 end
 
 @testset "numerical integration" begin
