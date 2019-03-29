@@ -60,3 +60,19 @@ fcn(x) = sin(x)
   @test x ≈ x2
 
 end
+
+@testset "numerical integration" begin
+
+  @test_throws MethodError HW1.numerical_integrate(1,1,1,1)
+
+  fcn(x) = 0
+  @test HW1.numerical_integrate(fcn,0,1,"trapezoidal") ≈ 0
+  @test HW1.numerical_integrate(fcn,0,1,"simpson") ≈ 0
+
+  # result should be 1 when integrated from 0 to 1
+  fcn(x) = 2*x
+  @test HW1.numerical_integrate(fcn,0,1,"trapezoidal") ≈ 1
+  @test HW1.numerical_integrate(fcn,0,1,"simpson") ≈ 1
+
+
+end
