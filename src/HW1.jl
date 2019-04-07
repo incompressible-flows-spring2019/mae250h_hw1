@@ -61,7 +61,7 @@ function trisolve(a,b,c,f::Vector{<:Real},sys_type::String)
     lam = b .+ (a+c)*cos.(2π*m/M) .- im*(a-c)*sin.(2π*m/M)
 
     # x now temporarily holds the transform of the right-hand side
-    fft!(x)
+    FFTW.fft!(x)
 
     # Scale x by M to make it agree with what we usually call the discrete
     # Fourier transform
@@ -74,7 +74,7 @@ function trisolve(a,b,c,f::Vector{<:Real},sys_type::String)
 
     # Now inverse transform the result and scale appropriately and return just
     # the real part of each element
-    ifft!(x)
+    FFTW.ifft!(x)
 
     x .*= M
 
