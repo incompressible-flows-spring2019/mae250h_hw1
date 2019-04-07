@@ -121,7 +121,7 @@ function circulant(a::Real,b::Real,c::Real,f::Vector{<:Real})
   lam = b .+ (a+c)*cos.(2π*m/M) .- im*(a-c)*sin.(2π*m/M)
 
   # x now temporarily holds the transform of the right-hand side
-  fft!(x)
+  FFTW.fft!(x)
 
   # Scale x by M to make it agree with what we usually call the discrete
   # Fourier transform
@@ -134,7 +134,7 @@ function circulant(a::Real,b::Real,c::Real,f::Vector{<:Real})
 
   # Now inverse transform the result and scale appropriately and return just
   # the real part of each element
-  ifft!(x)
+  FFTW.ifft!(x)
 
   x .*= M # multiply by the vector length to get the "correct" form of IFFT
 
