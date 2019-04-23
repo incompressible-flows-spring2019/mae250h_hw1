@@ -174,22 +174,24 @@ function thomas(a::Vector{<:Real},b::Vector{<:Real},c::Vector{<:Real},f::Vector{
     return x
   end
 
-  c[1] /= b[1]
-  tmp1 = c[1]
+  ctmp = copy(c)
+
+  ctmp[1] /= b[1]
+  tmp1 = ctmp[1]
   tmp2 = x[1]
   for i = 2:M-1
     tmp = b[i] - a[i-1]*tmp1
-    tmp1 = c[i]/tmp
+    tmp1 = ctmp[i]/tmp
     tmp2 = (x[i]-a[i-1]*tmp2)/tmp
-    c[i] = tmp1
+    ctmp[i] = tmp1
     x[i] = tmp2
   end
-  x[M] = (x[M]-a[M-1]*x[M-1])/(b[M]-a[M-1]*c[M-1])
+  x[M] = (x[M]-a[M-1]*x[M-1])/(b[M]-a[M-1]*ctmp[M-1])
 
   # Back substitute
   tmp = x[M]
   for i = M-1:-1:1
-    tmp = x[i] - c[i]*tmp
+    tmp = x[i] - ctmp[i]*tmp
     x[i] = tmp
   end
 
